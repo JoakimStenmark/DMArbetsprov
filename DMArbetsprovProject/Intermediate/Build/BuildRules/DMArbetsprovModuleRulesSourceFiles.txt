@@ -1,3 +1,0 @@
-D:\GitHub\DMArbetsprov\DMArbetsprovProject\Source\DMArbetsprov\DMArbetsprov.Build.cs
-D:\GitHub\DMArbetsprov\DMArbetsprovProject\Source\DMArbetsprov.Target.cs
-D:\GitHub\DMArbetsprov\DMArbetsprovProject\Source\DMArbetsprovEditor.Target.cs
