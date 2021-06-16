@@ -13,6 +13,10 @@ class ADMArbetsprovGameMode : public AGameModeBase
 
 public:
 	ADMArbetsprovGameMode();
+
+protected:
+	virtual void BeginPlay();
+
 };
 
 

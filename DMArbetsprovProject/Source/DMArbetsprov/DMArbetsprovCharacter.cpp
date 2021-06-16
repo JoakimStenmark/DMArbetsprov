@@ -82,6 +82,11 @@ ADMArbetsprovCharacter::ADMArbetsprovCharacter()
 
 	// Uncomment the following line to turn motion controllers on by default:
 	//bUsingMotionControllers = true;
+
+	//Ammunition setup
+	MaxAmmo = 25;
+	CurrentAmmo = 12;
+
 }
 
 void ADMArbetsprovCharacter::BeginPlay()
@@ -94,6 +99,13 @@ void ADMArbetsprovCharacter::BeginPlay()
 
 	VR_Gun->SetHiddenInGame(true, true);
 	Mesh1P->SetHiddenInGame(false, true);
+
+	if (PlayerUIClass != nullptr)
+	{
+
+		CurrentHUD = CreateWidget<UUserWidget>(GetWorld(), PlayerUIClass);
+		CurrentHUD->AddToViewport();
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

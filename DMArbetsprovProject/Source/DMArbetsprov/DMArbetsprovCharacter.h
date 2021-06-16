@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Blueprint/UserWidget.h"
 #include "DMArbetsprovCharacter.generated.h"
 
 class UInputComponent;
@@ -51,6 +52,9 @@ public:
 protected:
 	virtual void BeginPlay();
 
+	UPROPERTY()
+		UUserWidget* CurrentHUD;
+
 public:
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
@@ -85,6 +89,9 @@ public:
 	/** Whether to use motion controller location for aiming. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	uint32 bUsingMotionControllers : 1;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "PlayerUi")
+		TSubclassOf<UUserWidget> PlayerUIClass;
 
 protected:
 	
