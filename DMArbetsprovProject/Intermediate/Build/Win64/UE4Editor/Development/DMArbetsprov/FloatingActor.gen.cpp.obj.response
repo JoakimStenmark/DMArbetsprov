@@ -426,9 +426,9 @@
 /I ThirdParty
 /I ThirdParty\libSampleRate\Public
 /I ThirdParty\libSampleRate
-/I D:\GitHub\DMArbetsprov\Intermediate\Build\Win64\UE4Editor\Inc\DMArbetsprov
-/I D:\GitHub\DMArbetsprov\Source
-/I D:\GitHub\DMArbetsprov\Source\DMArbetsprov
+/I D:\GitHub\DMArbetsprov\DMArbetsprovProject\Intermediate\Build\Win64\UE4Editor\Inc\DMArbetsprov
+/I D:\GitHub\DMArbetsprov\DMArbetsprovProject\Source
+/I D:\GitHub\DMArbetsprov\DMArbetsprovProject\Source\DMArbetsprov
 /I ..\Intermediate\Build\Win64\UE4Editor\Inc\AugmentedReality
 /I Runtime\AugmentedReality\Public
 /I Runtime\AugmentedReality
@@ -437,12 +437,12 @@
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared"
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um"
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt"
-/FI"D:\GitHub\DMArbetsprov\Intermediate\Build\Win64\DMArbetsprovEditor\Development\Engine\SharedPCH.Engine.h"
-/Yu"D:\GitHub\DMArbetsprov\Intermediate\Build\Win64\DMArbetsprovEditor\Development\Engine\SharedPCH.Engine.h"
-/Fp"D:\GitHub\DMArbetsprov\Intermediate\Build\Win64\DMArbetsprovEditor\Development\Engine\SharedPCH.Engine.h.pch"
-"D:\GitHub\DMArbetsprov\Intermediate\Build\Win64\UE4Editor\Inc\DMArbetsprov\FloatingActor.gen.cpp"
-/FI"D:\GitHub\DMArbetsprov\Intermediate\Build\Win64\UE4Editor\Development\DMArbetsprov\Definitions.DMArbetsprov.h"
-/Fo"D:\GitHub\DMArbetsprov\Intermediate\Build\Win64\UE4Editor\Development\DMArbetsprov\FloatingActor.gen.cpp.obj"
+/FI"D:\GitHub\DMArbetsprov\DMArbetsprovProject\Intermediate\Build\Win64\DMArbetsprovEditor\Development\Engine\SharedPCH.Engine.h"
+/Yu"D:\GitHub\DMArbetsprov\DMArbetsprovProject\Intermediate\Build\Win64\DMArbetsprovEditor\Development\Engine\SharedPCH.Engine.h"
+/Fp"D:\GitHub\DMArbetsprov\DMArbetsprovProject\Intermediate\Build\Win64\DMArbetsprovEditor\Development\Engine\SharedPCH.Engine.h.pch"
+"D:\GitHub\DMArbetsprov\DMArbetsprovProject\Intermediate\Build\Win64\UE4Editor\Inc\DMArbetsprov\FloatingActor.gen.cpp"
+/FI"D:\GitHub\DMArbetsprov\DMArbetsprovProject\Intermediate\Build\Win64\UE4Editor\Development\DMArbetsprov\Definitions.DMArbetsprov.h"
+/Fo"D:\GitHub\DMArbetsprov\DMArbetsprovProject\Intermediate\Build\Win64\UE4Editor\Development\DMArbetsprov\FloatingActor.gen.cpp.obj"
 /TP
 /GR-
 /W4
