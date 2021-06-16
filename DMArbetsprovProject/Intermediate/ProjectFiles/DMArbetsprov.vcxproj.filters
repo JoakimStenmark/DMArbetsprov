@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\DMArbetsprov.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{D56AD5A5-1CF8-4BC6-9F49-697B621BDF88}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\DMArbetsprov.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\DMArbetsprovEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{DBA7BFFD-D1BA-4BB5-8D87-0459E1A69930}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\DMArbetsprov">
+      <UniqueIdentifier>{4192B007-56BD-4146-BA6E-59FA25FADAF4}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\DMArbetsprov\DMArbetsprov.Build.cs">
+      <Filter>Source\DMArbetsprov</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\DMArbetsprov\DMArbetsprov.cpp">
+      <Filter>Source\DMArbetsprov</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\DMArbetsprov\DMArbetsprov.h">
+      <Filter>Source\DMArbetsprov</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\DMArbetsprov\DMArbetsprovCharacter.cpp">
+      <Filter>Source\DMArbetsprov</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\DMArbetsprov\DMArbetsprovCharacter.h">
+      <Filter>Source\DMArbetsprov</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\DMArbetsprov\DMArbetsprovGameMode.cpp">
+      <Filter>Source\DMArbetsprov</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\DMArbetsprov\DMArbetsprovGameMode.h">
+      <Filter>Source\DMArbetsprov</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\DMArbetsprov\DMArbetsprovHUD.cpp">
+      <Filter>Source\DMArbetsprov</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\DMArbetsprov\DMArbetsprovHUD.h">
+      <Filter>Source\DMArbetsprov</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\DMArbetsprov\DMArbetsprovProjectile.cpp">
+      <Filter>Source\DMArbetsprov</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\DMArbetsprov\DMArbetsprovProjectile.h">
+      <Filter>Source\DMArbetsprov</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\DMArbetsprov\FloatingActor.cpp">
+      <Filter>Source\DMArbetsprov</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\DMArbetsprov\FloatingActor.h">
+      <Filter>Source\DMArbetsprov</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
