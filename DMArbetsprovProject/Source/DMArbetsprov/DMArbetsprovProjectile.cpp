@@ -2,6 +2,7 @@
 
 #include "DMArbetsprovProjectile.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "Components/SphereComponent.h"
 
 ADMArbetsprovProjectile::ADMArbetsprovProjectile() 
@@ -29,15 +30,26 @@ ADMArbetsprovProjectile::ADMArbetsprovProjectile()
 
 	// Die after 3 seconds by default
 	InitialLifeSpan = 3.0f;
+
+	//Set Default Damage Stats
+	BaseDamage = 100;
+	
+
 }
 
 void ADMArbetsprovProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
 	// Only add impulse and destroy projectile if we hit a physics
-	if ((OtherActor != NULL) && (OtherActor != this) && (OtherComp != NULL) && OtherComp->IsSimulatingPhysics())
+	if ((OtherActor != NULL) && (OtherActor != this) && (OtherComp != NULL))
 	{
-		OtherComp->AddImpulseAtLocation(GetVelocity() * 100.0f, GetActorLocation());
+		FVector const& HitFromDirection = Hit.ImpactPoint;
+		AController* EventInstigator = GetWorld()->GetFirstPlayerController();
+		
+		UGameplayStatics::ApplyPointDamage(OtherActor, BaseDamage, HitFromDirection, Hit, EventInstigator, this, DamageType);
+		//OtherComp->AddImpulseAtLocation(GetVelocity() * 100.0f, GetActorLocation());
 
-		Destroy();
+		//Destroy();
+		
+
 	}
 }

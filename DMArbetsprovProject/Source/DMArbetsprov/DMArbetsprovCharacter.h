@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Blueprint/UserWidget.h"
+#include "PlayerHUD.h"
 #include "DMArbetsprovCharacter.generated.h"
 
 class UInputComponent;
@@ -52,8 +53,8 @@ public:
 protected:
 	virtual void BeginPlay();
 
-	UPROPERTY()
-		UUserWidget* CurrentHUD;
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly)
+		UPlayerHUD* CurrentHUD;
 
 public:
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
@@ -72,11 +73,14 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category=Projectile)
 	TSubclassOf<class ADMArbetsprovProjectile> ProjectileClass;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Projectile)
+	UPROPERTY(BlueprintReadWrite, Category = Projectile)
 		int CurrentAmmo;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Projectile)
 		int MaxAmmo;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Projectile)
+		int InitAmmo;
 	
 	/** Sound to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Gameplay)
@@ -118,6 +122,10 @@ protected:
 	 * @param Rate	This is a normalized rate, i.e. 1.0 means 100% of desired turn rate
 	 */
 	void LookUpAtRate(float Rate);
+
+
+	UFUNCTION(BlueprintCallable)
+	void AddAmmo(int Amount);
 
 	struct TouchData
 	{

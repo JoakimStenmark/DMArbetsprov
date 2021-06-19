@@ -14,4 +14,9 @@ class DMARBETSPROV_API UPlayerHUD : public UUserWidget
 {
 	GENERATED_BODY()
 	
+public:
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category= "UI")
+	void UpdateAmmoUI(int CurrentAmmo, int MaxAmmo);
+
 };

@@ -11,6 +11,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "MotionControllerComponent.h"
 #include "XRMotionControllerBase.h" // for FXRMotionControllerBase::RightHandSourceId
+#include "PlayerHUD.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
 
@@ -103,8 +104,9 @@ void ADMArbetsprovCharacter::BeginPlay()
 	if (PlayerUIClass != nullptr)
 	{
 
-		CurrentHUD = CreateWidget<UUserWidget>(GetWorld(), PlayerUIClass);
+		CurrentHUD = CreateWidget<UPlayerHUD>(GetWorld(), PlayerUIClass);
 		CurrentHUD->AddToViewport();
+		CurrentHUD->UpdateAmmoUI(CurrentAmmo, MaxAmmo);
 	}
 }
 
@@ -167,6 +169,8 @@ void ADMArbetsprovCharacter::OnFire()
 			// spawn the projectile at the muzzle
 			World->SpawnActor<ADMArbetsprovProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
 
+			CurrentAmmo--;
+			CurrentHUD->UpdateAmmoUI(CurrentAmmo, MaxAmmo);
 		}
 	}
 
@@ -284,6 +288,12 @@ void ADMArbetsprovCharacter::LookUpAtRate(float Rate)
 {
 	// calculate delta for this frame from the rate information
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
+}
+
+void ADMArbetsprovCharacter::AddAmmo(int Amount)
+{
+	CurrentAmmo = FMath::Clamp(CurrentAmmo + Amount, 0, MaxAmmo);
+	CurrentHUD->UpdateAmmoUI(CurrentAmmo, MaxAmmo);
 }
 
 bool ADMArbetsprovCharacter::EnableTouchscreenMovement(class UInputComponent* PlayerInputComponent)

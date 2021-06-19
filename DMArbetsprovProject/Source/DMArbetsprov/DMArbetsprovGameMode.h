@@ -15,6 +15,10 @@ public:
 	ADMArbetsprovGameMode();
 
 protected:
+
+	UPROPERTY(EditAnywhere, Category = "Enemies")
+	TSubclassOf<ACharacter> Enemy;
+
 	virtual void BeginPlay();
 
 };
