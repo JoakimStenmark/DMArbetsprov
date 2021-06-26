@@ -24,11 +24,15 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 protected:
-	UPROPERTY(EditAnywhere, Category = SpawnSettings)
+
+	UPROPERTY(VisibleAnywhere, Category = SpawnSettings)
 	class USphereComponent* VisibleSpawnRadius;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = SpawnSettings)
 	TSubclassOf<AActor> ActorToSpawn;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = SpawnSettings)
+		TArray<TSubclassOf<AActor>> ActorsToSpawn;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SpawnSettings)
 		int ActorAmountLimit;
@@ -36,9 +40,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = SpawnSettings)
 		int ActorAmount;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = SpawnSettings)
-		TArray<AActor*> ActorList;
-	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = SpawnSettings)
+	TArray<AActor*> SpawnedActors;
+
 	FTimerHandle MemberTimerHandle;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SpawnSettings)
@@ -47,7 +51,10 @@ protected:
 public:
 
 	UFUNCTION(BlueprintCallable, Category = Spawn)
-	void SpawnActorOnRandomNavMeshPoint();
+		TSubclassOf<AActor> GetRandomActorFromList();
+
+	UFUNCTION(BlueprintCallable, Category = Spawn)
+		void SpawnActorOnRandomNavMeshPoint();
 
 	UFUNCTION(BlueprintCallable, Category = Spawn)
 		void StartSpawning();

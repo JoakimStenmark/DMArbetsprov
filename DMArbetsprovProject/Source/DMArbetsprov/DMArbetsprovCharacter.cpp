@@ -7,8 +7,11 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/InputSettings.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "PlayerHUD.h"
+#include "TimerManager.h"
+
 
 DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
 
@@ -59,8 +62,7 @@ ADMArbetsprovCharacter::ADMArbetsprovCharacter()
 
 	//Ammunition setup
 	MaxAmmo = 25;
-	CurrentAmmo = 12;
-
+	InitAmmo = 12;
 }
 
 void ADMArbetsprovCharacter::BeginPlay()
@@ -73,6 +75,9 @@ void ADMArbetsprovCharacter::BeginPlay()
 
 	Mesh1P->SetHiddenInGame(false, true);
 
+	CurrentProjectile = DefaultProjectile;
+	CurrentAmmo = InitAmmo;
+
 	if (PlayerUIClass != nullptr)
 	{
 
@@ -80,6 +85,7 @@ void ADMArbetsprovCharacter::BeginPlay()
 		CurrentHUD->AddToViewport();
 		CurrentHUD->UpdateAmmoUI(CurrentAmmo, MaxAmmo);
 	}
+
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -113,12 +119,12 @@ void ADMArbetsprovCharacter::SetupPlayerInputComponent(class UInputComponent* Pl
 void ADMArbetsprovCharacter::OnFire()
 {
 	// try and fire a projectile
-	if (ProjectileClass != NULL)
+	if (CurrentProjectile != NULL)
 	{
 
 		if (CurrentAmmo <= 0)
 		{
-			UE_LOG(LogClass, Log, TEXT("No AMMO"));
+			//UE_LOG(LogClass, Log, TEXT("No AMMO"));
 			return;
 		}
 
@@ -134,7 +140,7 @@ void ADMArbetsprovCharacter::OnFire()
 			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
 
 			// spawn the projectile at the muzzle
-			World->SpawnActor<ADMArbetsprovProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
+			World->SpawnActor<ADMArbetsprovProjectile>(CurrentProjectile, SpawnLocation, SpawnRotation, ActorSpawnParams);
 
 			CurrentAmmo--;
 			CurrentHUD->UpdateAmmoUI(CurrentAmmo, MaxAmmo);
@@ -196,5 +202,28 @@ void ADMArbetsprovCharacter::AddAmmo(int Amount)
 {
 	CurrentAmmo = FMath::Clamp(CurrentAmmo + Amount, 0, MaxAmmo);
 	CurrentHUD->UpdateAmmoUI(CurrentAmmo, MaxAmmo);
+}
+
+void ADMArbetsprovCharacter::IncreaseSpeedStat(float Amount, float AccelerationMultiplier)
+{
+	GetCharacterMovement()->MaxWalkSpeed += Amount;
+	GetCharacterMovement()->MaxAcceleration *= AccelerationMultiplier;
+
+	
+}
+
+void ADMArbetsprovCharacter::SwitchProjectile(TSubclassOf<ADMArbetsprovProjectile> NewProjectile, float ActiveTime)
+{
+	CurrentProjectile = NewProjectile;
+	FTimerHandle TimerInstance;
+	
+	GetWorldTimerManager().SetTimer(TimerInstance, this, &ADMArbetsprovCharacter::ResetProjectileToDefault, ActiveTime);
+
+}
+
+void ADMArbetsprovCharacter::ResetProjectileToDefault()
+{
+	CurrentProjectile = DefaultProjectile;
+
 }
 

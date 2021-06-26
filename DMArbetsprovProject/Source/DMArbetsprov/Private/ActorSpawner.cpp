@@ -5,6 +5,7 @@
 #include "Engine/World.h"
 #include "NavigationSystem.h"
 #include "TimerManager.h"
+#include "Components/SphereComponent.h"
 
 // Sets default values
 AActorSpawner::AActorSpawner()
@@ -18,6 +19,11 @@ AActorSpawner::AActorSpawner()
 	ActorAmountLimit = 500;
 	ActorAmount = 0;
 
+	VisibleSpawnRadius = CreateDefaultSubobject<USphereComponent>(TEXT("VisibleSpawnRadius"));
+	VisibleSpawnRadius->InitSphereRadius(50.f);
+	VisibleSpawnRadius->BodyInstance.SetCollisionProfileName("NoCollision");
+	
+
 
 }
 
@@ -25,8 +31,6 @@ AActorSpawner::AActorSpawner()
 void AActorSpawner::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	StartSpawning();
 
 }	
 
@@ -47,32 +51,35 @@ void AActorSpawner::SpawnActorOnRandomNavMeshPoint()
 		if (NavSystem)
 		{
 			FNavLocation ResultLocation;
-			NavSystem->GetRandomPoint(ResultLocation);
-			
-			FRotator RandomRotation = FRotator(0.f, FMath::RandRange(0.f, 359.f), 0.f);
-			FActorSpawnParameters SpawnParameters = FActorSpawnParameters();
-
-			AActor* SpawnedActor = World->SpawnActor<AActor>(ActorToSpawn, ResultLocation.Location, RandomRotation);
+			NavSystem->GetRandomPoint(ResultLocation);			
+			FRotator RandomRotation = FRotator(0.f, FMath::RandRange(0.f, 359.f), 0.f);			
+			AActor* SpawnedActor = World->SpawnActor<AActor>(GetRandomActorFromList(), ResultLocation.Location, RandomRotation);
 
 			ActorAmount++;
+			SpawnedActors.Add(SpawnedActor);
 
-			if (ActorAmount >= ActorAmountLimit)
+			//if we are spawning over time and reach our limit then stop.
+			if (SpawnedActors.Num() >= ActorAmountLimit)
 			{
 				StopSpawning();
+
+			}
+			
+			if (ActorAmount >= ActorAmountLimit)
+			{
+				//StopSpawning();
 			}
 
-			
+
 		}
 	}
 	
-
 }
 
 void AActorSpawner::StartSpawning()
 {
 	GetWorldTimerManager().SetTimer(MemberTimerHandle, this, &AActorSpawner::SpawnActorOnRandomNavMeshPoint, TimeBetweenSpawns, true, 1.0f);
-	//UE_LOG(LogClass, Log, TEXT("%s", GetName(), " Has Started Spawning"));
-	UE_LOG(LogClass, Log, TEXT("{GetName()}, Has Started"));
+	//UE_LOG(LogClass, Log, TEXT("%s has Started Spawning"), *GetName());
 
 }
 
@@ -80,8 +87,21 @@ void AActorSpawner::StopSpawning()
 {
 	GetWorldTimerManager().ClearTimer(MemberTimerHandle);
 	//FString L = GetName() + " Has Stopped Spawning";
-	UE_LOG(LogClass, Log, TEXT("{GetName()}, Has Stopped"));
+	//UE_LOG(LogClass, Log, TEXT("{GetName()}, Has Stopped"));
 
 
+}
+
+TSubclassOf<AActor> AActorSpawner::GetRandomActorFromList()
+{
+	
+	if (ActorsToSpawn.Num() > 0)
+	{
+		TSubclassOf<AActor> ChosenActor = ActorsToSpawn[FMath::RandRange(0, ActorsToSpawn.Num() - 1)];
+
+		return ChosenActor;
+	}
+
+	return NULL;
 }
 

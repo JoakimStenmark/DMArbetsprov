@@ -41,5 +41,8 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Damage)
 	bool bIsExplosive;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Damage)
+		float ExplosiveRadius;
 };
 

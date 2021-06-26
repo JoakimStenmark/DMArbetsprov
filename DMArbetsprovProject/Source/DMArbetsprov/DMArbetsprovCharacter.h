@@ -54,8 +54,11 @@ public:
 	FVector GunOffset;
 
 	/** Projectile class to spawn */
-	UPROPERTY(EditDefaultsOnly, Category=Projectile)
-	TSubclassOf<class ADMArbetsprovProjectile> ProjectileClass;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Projectile)
+	TSubclassOf<class ADMArbetsprovProjectile> CurrentProjectile;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Projectile)
+		TSubclassOf<class ADMArbetsprovProjectile> DefaultProjectile;
 
 	UPROPERTY(BlueprintReadWrite, Category = Projectile)
 		int CurrentAmmo;
@@ -103,7 +106,21 @@ protected:
 
 	UFUNCTION(BlueprintCallable)
 	void AddAmmo(int Amount);
-	
+
+	UFUNCTION(BlueprintCallable)
+		void IncreaseSpeedStat(float Amount, float AccelerationMultiplier);
+
+	/**
+	* Called via Pickups to temporarily change shot type.
+	* @param ActiveTime  Time projectile is active
+	*/
+	UFUNCTION(BlueprintCallable)
+		void SwitchProjectile(TSubclassOf<ADMArbetsprovProjectile> NewProjectile, float ActiveTime);
+
+	UFUNCTION(BlueprintCallable)
+		void ResetProjectileToDefault();
+
+
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
