@@ -11,6 +11,10 @@ ADMArbetsprovGameMode::ADMArbetsprovGameMode()
 	// set default pawn class to our Blueprinted character
 	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnClassFinder(TEXT("/Game/FirstPersonCPP/Blueprints/BP_FirstPersonCharacter"));
 	DefaultPawnClass = PlayerPawnClassFinder.Class;
+
+	
+	InitialLoseCondition = 10;
+	CurrentLoseCondition = InitialLoseCondition;
 	
 }
 
@@ -18,3 +22,4 @@ void ADMArbetsprovGameMode::BeginPlay()
 {
 	
 }
+

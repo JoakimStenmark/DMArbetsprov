@@ -16,8 +16,18 @@ public:
 
 protected:
 
-	UPROPERTY(EditAnywhere, Category = "Enemies")
-	TSubclassOf<ACharacter> Enemy;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GamePlayStatistics")
+		int EnemiesDestroyed;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "GamePlayStatistics")
+		int PickupsPickedUp;
+
+	//When this is zero or less you lose the game
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Game")
+		float CurrentLoseCondition;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game")
+		float InitialLoseCondition;
 
 	virtual void BeginPlay();
 

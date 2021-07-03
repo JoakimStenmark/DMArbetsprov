@@ -14,10 +14,8 @@ AActorSpawner::AActorSpawner()
 	PrimaryActorTick.bCanEverTick = true;
 
 	TimeBetweenSpawns = 1.f;
-
-	//Limits how many actors this Spawner will have active at the same time.
+	
 	ActorAmountLimit = 500;
-	ActorAmount = 0;
 
 	VisibleSpawnRadius = CreateDefaultSubobject<USphereComponent>(TEXT("VisibleSpawnRadius"));
 	VisibleSpawnRadius->InitSphereRadius(50.f);
@@ -41,54 +39,47 @@ void AActorSpawner::Tick(float DeltaTime)
 
 }
 
-void AActorSpawner::SpawnActorOnRandomNavMeshPoint()
+AActor* AActorSpawner::SpawnActorOnRandomNavMeshPoint()
 {
+	//ignores spawning if limit reached. Easier Solution than starting and stopping timers.
+	if (SpawnedActors.Num() >= ActorAmountLimit)
+	{
+		return nullptr;
+
+	}
+
 	UWorld* World = GetWorld();
 	
-	if (World)
+	if (!World)
 	{
-		UNavigationSystemV1* NavSystem = UNavigationSystemV1::GetCurrent(World);
-		if (NavSystem)
-		{
-			FNavLocation ResultLocation;
-			NavSystem->GetRandomPoint(ResultLocation);			
-			FRotator RandomRotation = FRotator(0.f, FMath::RandRange(0.f, 359.f), 0.f);			
-			AActor* SpawnedActor = World->SpawnActor<AActor>(GetRandomActorFromList(), ResultLocation.Location, RandomRotation);
-
-			ActorAmount++;
-			SpawnedActors.Add(SpawnedActor);
-
-			//if we are spawning over time and reach our limit then stop.
-			if (SpawnedActors.Num() >= ActorAmountLimit)
-			{
-				StopSpawning();
-
-			}
-			
-			if (ActorAmount >= ActorAmountLimit)
-			{
-				//StopSpawning();
-			}
-
-
-		}
+		return nullptr;
 	}
-	
-}
 
-void AActorSpawner::StartSpawning()
-{
-	GetWorldTimerManager().SetTimer(MemberTimerHandle, this, &AActorSpawner::SpawnActorOnRandomNavMeshPoint, TimeBetweenSpawns, true, 1.0f);
-	//UE_LOG(LogClass, Log, TEXT("%s has Started Spawning"), *GetName());
+	UNavigationSystemV1* NavSystem = UNavigationSystemV1::GetCurrent(World);
+	if (!NavSystem)
+	{
+		return nullptr;
+	}
 
-}
+	FNavLocation ResultLocation;
+	NavSystem->GetRandomPoint(ResultLocation);
+	FRotator RandomRotation = FRotator(0.f, FMath::RandRange(0.f, 359.f), 0.f);
+	AActor* SpawnedActor = World->SpawnActor<AActor>(GetRandomActorFromList(), ResultLocation.Location, RandomRotation);
 
-void AActorSpawner::StopSpawning()
-{
-	GetWorldTimerManager().ClearTimer(MemberTimerHandle);
-	//FString L = GetName() + " Has Stopped Spawning";
-	//UE_LOG(LogClass, Log, TEXT("{GetName()}, Has Stopped"));
+	//Try again if spawn failed
+	if (SpawnedActor == nullptr)
+	{
+		NavSystem->GetRandomPoint(ResultLocation);
+		SpawnedActor = World->SpawnActor<AActor>(GetRandomActorFromList(), ResultLocation.Location, RandomRotation);
+	}
 
+	if (SpawnedActor != nullptr)
+	{
+		SpawnedActors.Add(SpawnedActor);
+
+	}
+
+	return SpawnedActor;
 
 }
 
@@ -103,5 +94,12 @@ TSubclassOf<AActor> AActorSpawner::GetRandomActorFromList()
 	}
 
 	return NULL;
+}
+
+void AActorSpawner::RemoveActorFromSpawnedActorsList(AActor* ActorReference)
+{
+	
+	SpawnedActors.RemoveSingleSwap(ActorReference, true);
+
 }
 

@@ -31,35 +31,32 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = SpawnSettings)
 	TSubclassOf<AActor> ActorToSpawn;
 
+	//Actors that this instance can spawn.
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = SpawnSettings)
 		TArray<TSubclassOf<AActor>> ActorsToSpawn;
 
+	//Limits how many actors this Spawner will have active at the same time.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SpawnSettings)
 		int ActorAmountLimit;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = SpawnSettings)
-		int ActorAmount;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = SpawnSettings)
 	TArray<AActor*> SpawnedActors;
-
-	FTimerHandle MemberTimerHandle;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = SpawnSettings)
 	float TimeBetweenSpawns;
 
 public:
 
+	//Used by SpawnActorOnRandomNavMeshPoint.
 	UFUNCTION(BlueprintCallable, Category = Spawn)
 		TSubclassOf<AActor> GetRandomActorFromList();
 
+	//Main spawning function.
 	UFUNCTION(BlueprintCallable, Category = Spawn)
-		void SpawnActorOnRandomNavMeshPoint();
+		AActor* SpawnActorOnRandomNavMeshPoint();
 
+	//Call this when the actor in question dies to allow new spawns to happen
 	UFUNCTION(BlueprintCallable, Category = Spawn)
-		void StartSpawning();
+		void RemoveActorFromSpawnedActorsList(AActor* ActorReference);
 
-	UFUNCTION(BlueprintCallable, Category = Spawn)
-		void StopSpawning();
-	
 };

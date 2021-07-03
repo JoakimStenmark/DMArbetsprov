@@ -23,7 +23,7 @@ protected:
 	float CurrentHealth;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
-	float MaxHealth = 1000;;
+	float MaxHealth;
 
 public:	
 	// Called every frame
