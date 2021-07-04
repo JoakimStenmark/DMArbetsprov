@@ -40,9 +40,6 @@ protected:
 		TSubclassOf<UDamageType> DamageType;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Damage)
-	bool bIsExplosive;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Damage)
 		float ExplosiveRadius;
 };
 

@@ -42,18 +42,6 @@ void ADMArbetsprovProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherA
 	
 	if ((OtherActor != NULL) && (OtherActor != this) && (OtherComp != NULL))
 	{
-		FVector const& HitFromDirection = Hit.ImpactPoint;
-		AController* EventInstigator = GetWorld()->GetFirstPlayerController();
-		
-		if (bIsExplosive)
-		{
-			//float MinDamage = BaseDamage * 0.25;
-			
-			//UGameplayStatics::ApplyRadialDamageWithFalloff(this, BaseDamage, MinDamage, GetActorLocation(), ExplosiveRadius, ExplosiveRadius * 2, 1.f, DamageType, TArray<AActor*>(), EventInstigator);
-			//UGameplayStatics::ApplyRadialDamage(this, BaseDamage, CollisionComp->GetComponentLocation(), ExplosiveRadius, DamageType, TArray<AActor*>(), EventInstigator);
-
-		}
-
 		Destroy();
 
 	
